@@ -42,12 +42,13 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
-    saveBook: async (parent, { bookId }, context) => {
+    //TODO: saveBook: Accepts a book author's array, description, title, bookId, image, and link as parameters; returns a User type. (Look into creating what's known as an input type to handle all of these parameters!)
+    saveBook: async (parent, { userId, savedBooks }, context) => {
       if (context.user) {
-        const book = await Book.create({
-          bookId,
+
         });
       }
     },
+    //TODO: removeBook: Accepts a book's bookId as a parameter; returns a User type.
   },
 };
