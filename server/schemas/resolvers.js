@@ -38,28 +38,30 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
-    //TODO: saveBook: Accepts a book author's array, description, title, bookId, image, and link as parameters; returns a User type. (Look into creating what's known as an input type to handle all of these parameters!)
     saveBook: async (parent, { bookData }, context) => {
       if (context.user) {
-        const userBooks = await User.findByIdAndUpdate(
+        const updateUser = await User.findByIdAndUpdate(
           { _id: context.user._id },
           { $push: { savedBooks: bookData } },
           { new: true }
         );
 
-        return userBooks;
+        return updateUser;
       }
       throw new AuthenticationError("You need to be logged in!");
     },
-    //TODO: removeBook: Accepts a book's bookId as a parameter; returns a User type.
     removeBook: async (parent, { bookId }, context) => {
       if (context.user) {
-        const userBooks = await User.findOneAndUpdate(
+        const updateUser = await User.findOneAndUpdate(
           { _id: context.user._id },
           { $pull: { savedBooks: { bookId } } },
           { new: true }
         );
+
+        return updateUser;
       }
+
+      throw new AuthenticationError("You need to be logged in!");
     },
   },
 };
